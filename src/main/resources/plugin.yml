@@ -1,0 +1,5 @@
+name: TelegramGateway
+main: fi.felixbade.TelegramGateway.Main
+version: ${project.version}
+authors: [felixbade]
+description: Links Minecraft chat to Telegram
