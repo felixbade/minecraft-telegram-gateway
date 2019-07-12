@@ -19,7 +19,7 @@ public class Main extends JavaPlugin implements Listener {
     public static TelegramBotClient telegram;
 
     @Override
-	public void onEnable() {
+    public void onEnable() {
         this.saveDefaultConfig();
         this.telegramChatId = this.getConfig().getInt("telegram-chat-id");
         this.telegramToken = this.getConfig().getString("telegram-token");
@@ -45,22 +45,22 @@ public class Main extends JavaPlugin implements Listener {
                 String msg = "§oTelegram message error";
                 if (message.text != null) {
                     msg = String.format("%s %s: %s",
-                            update.message.from.first_name,
-                            update.message.from.last_name,
-                            update.message.text);
+                    update.message.from.first_name,
+                    update.message.from.last_name,
+                    update.message.text);
                 } else {
                     msg = String.format("§o%s %s sent a non-text message",
-                            update.message.from.first_name,
-                            update.message.from.last_name);
+                    update.message.from.first_name,
+                    update.message.from.last_name);
                 }
                 Bukkit.broadcastMessage(msg);
             }
-		}, 10, 10);
+        }, 10, 10);
     }
 
-	@EventHandler
-	public void onChat(AsyncPlayerChatEvent event) {
-		if (event.isCancelled()) {
+    @EventHandler
+    public void onChat(AsyncPlayerChatEvent event) {
+        if (event.isCancelled()) {
             return;
         }
 
@@ -68,25 +68,25 @@ public class Main extends JavaPlugin implements Listener {
         String message = event.getMessage();
         String messageToTelegram = String.format("<%s> %s", name, message);
         telegram.sendMessage(telegramChatId, messageToTelegram);
-	}
+    }
 
-	@EventHandler
-	public void onJoin(PlayerJoinEvent event) {
+    @EventHandler
+    public void onJoin(PlayerJoinEvent event) {
         String name = event.getPlayer().getName();
         String messageToTelegram = String.format("%s joined the game", name);
         telegram.sendMessage(telegramChatId, messageToTelegram);
-	}
+    }
 
-	@EventHandler
-	public void onQuit(PlayerQuitEvent event) {
+    @EventHandler
+    public void onQuit(PlayerQuitEvent event) {
         String name = event.getPlayer().getName();
         String messageToTelegram = String.format("%s left the game", name);
         telegram.sendMessage(telegramChatId, messageToTelegram);
-	}
+    }
 
-	@EventHandler
-	public void onDeath(PlayerDeathEvent event) {
+    @EventHandler
+    public void onDeath(PlayerDeathEvent event) {
         String messageToTelegram = event.getDeathMessage();
         telegram.sendMessage(telegramChatId, messageToTelegram);
-	}
+    }
 }

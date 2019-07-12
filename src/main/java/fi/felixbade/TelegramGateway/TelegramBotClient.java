@@ -30,7 +30,7 @@ public class TelegramBotClient {
 
     public void sendMessage(int telegramChatId, String messageToTelegram) {
         new Thread(new Runnable() {
-			public void run() {
+            public void run() {
                 blockingSendMessage(telegramChatId, messageToTelegram);
             }
         }).start();
@@ -48,106 +48,106 @@ public class TelegramBotClient {
         try {
             httpPostJson(url, blob);
         } catch (java.io.IOException e) {}
-    }
-
-    public TelegramUpdate[] getNextUpdates() {
-        String url = String.format("https://api.telegram.org/bot%s/getUpdates?offset=%d",
-                this.token, lastUpdateId+1);
-
-        JsonObject updates = null;
-        try {
-            updates = httpGetJson(url);
-        } catch (IOException e) {
-            return new TelegramUpdate[0];
         }
 
-        if (updates == null) {
-            return new TelegramUpdate[0];
-        }
+        public TelegramUpdate[] getNextUpdates() {
+            String url = String.format("https://api.telegram.org/bot%s/getUpdates?offset=%d",
+            this.token, lastUpdateId+1);
 
-        if (updates.has("result")) {
-            JsonArray updatesBlob = updates.getAsJsonArray("result");
-            int updateCount = updatesBlob.size();
-            TelegramUpdate[] parsedUpdates = new TelegramUpdate[updateCount];
-
-            int i = 0;
-            for (JsonElement blob : updatesBlob) {
-                TelegramUpdate update = gson.fromJson(blob, TelegramUpdate.class);
-                int updateId = update.update_id;
-                if (updateId == this.lastUpdateId) {
-                    continue;
-                }
-                this.lastUpdateId = updateId;
-                parsedUpdates[i] = update;
-                i++;
+            JsonObject updates = null;
+            try {
+                updates = httpGetJson(url);
+            } catch (IOException e) {
+                return new TelegramUpdate[0];
             }
 
-            return parsedUpdates;
+            if (updates == null) {
+                return new TelegramUpdate[0];
+            }
+
+            if (updates.has("result")) {
+                JsonArray updatesBlob = updates.getAsJsonArray("result");
+                int updateCount = updatesBlob.size();
+                TelegramUpdate[] parsedUpdates = new TelegramUpdate[updateCount];
+
+                int i = 0;
+                for (JsonElement blob : updatesBlob) {
+                    TelegramUpdate update = gson.fromJson(blob, TelegramUpdate.class);
+                    int updateId = update.update_id;
+                    if (updateId == this.lastUpdateId) {
+                        continue;
+                    }
+                    this.lastUpdateId = updateId;
+                    parsedUpdates[i] = update;
+                    i++;
+                }
+
+                return parsedUpdates;
+            }
+
+            return new TelegramUpdate[0];
         }
 
-        return new TelegramUpdate[0];
+        public JsonObject httpGetJson(String url) throws IOException {
+            String response = httpGet(url);
+            JsonParser parser = new JsonParser();
+            return parser.parse(response).getAsJsonObject();
+        }
+
+        public String httpGet(String url) throws IOException {
+            URL url2;
+            try {
+                url2 = new URL(url);
+            } catch (MalformedURLException e) {
+                return "";
+            }
+
+            URLConnection connection = url2.openConnection();
+            BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+            String response = "";
+            String line;
+            while ((line = reader.readLine()) != null) {
+                response += line;
+            }
+
+            reader.close();
+            return response;
+        }
+
+        public JsonObject httpPostJson(String url, JsonObject data) throws IOException {
+            URL url2;
+            try {
+                url2 = new URL(url);
+            } catch (MalformedURLException e) {
+                return null;
+            }
+
+            String body = gson.toJson(data);
+
+            HttpURLConnection connection = (HttpURLConnection) url2.openConnection();
+            connection.setRequestMethod("POST");
+            connection.setDoInput(true);
+            connection.setDoOutput(true);
+            connection.setUseCaches(false);
+            connection.setRequestProperty("Content-Type", "application/json; utf-8");
+            connection.setRequestProperty("Content-Length", String.valueOf(body.length()));
+            connection.setRequestProperty("Accept", "application/json");
+
+            DataOutputStream out = new DataOutputStream(connection.getOutputStream());
+            BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(out, "utf-8"));
+            writer.write(body);
+            writer.close();
+            out.close();
+
+            BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+            String response = "";
+            String line;
+            while ((line = reader.readLine()) != null) {
+                response += line;
+            }
+            reader.close();
+
+            JsonParser parser = new JsonParser();
+            return parser.parse(response).getAsJsonObject();
+        }
     }
-
-    public JsonObject httpGetJson(String url) throws IOException {
-        String response = httpGet(url);
-		JsonParser parser = new JsonParser();
-		return parser.parse(response).getAsJsonObject();
-    }
-
-    public String httpGet(String url) throws IOException {
-        URL url2;
-        try {
-            url2 = new URL(url);
-        } catch (MalformedURLException e) {
-            return "";
-        }
-
-        URLConnection connection = url2.openConnection();
-        BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
-        String response = "";
-        String line;
-        while ((line = reader.readLine()) != null) {
-            response += line;
-        }
-
-        reader.close();
-        return response;
-    }
-
-    public JsonObject httpPostJson(String url, JsonObject data) throws IOException {
-        URL url2;
-        try {
-            url2 = new URL(url);
-        } catch (MalformedURLException e) {
-            return null;
-        }
-
-        String body = gson.toJson(data);
-
-        HttpURLConnection connection = (HttpURLConnection) url2.openConnection();
-        connection.setRequestMethod("POST");
-        connection.setDoInput(true);
-        connection.setDoOutput(true);
-        connection.setUseCaches(false);
-        connection.setRequestProperty("Content-Type", "application/json; utf-8");
-        connection.setRequestProperty("Content-Length", String.valueOf(body.length()));
-        connection.setRequestProperty("Accept", "application/json");
-
-        DataOutputStream out = new DataOutputStream(connection.getOutputStream());
-        BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(out, "utf-8"));
-        writer.write(body);
-        writer.close();
-        out.close();
-
-        BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
-        String response = "";
-        String line;
-        while ((line = reader.readLine()) != null) {
-            response += line;
-        }
-        reader.close();
-
-        JsonParser parser = new JsonParser();
-        return parser.parse(response).getAsJsonObject();
-    }
-}
