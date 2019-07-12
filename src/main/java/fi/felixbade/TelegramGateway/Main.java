@@ -5,6 +5,7 @@ import java.util.logging.Logger;
 import org.bukkit.Bukkit;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
@@ -77,9 +78,15 @@ public class Main extends JavaPlugin implements Listener {
 	}
 
 	@EventHandler
-	public void onJoin(PlayerQuitEvent event) {
+	public void onQuit(PlayerQuitEvent event) {
         String name = event.getPlayer().getName();
         String messageToTelegram = String.format("%s left the game", name);
+        telegram.sendMessage(telegramChatId, messageToTelegram);
+	}
+
+	@EventHandler
+	public void onDeath(PlayerDeathEvent event) {
+        String messageToTelegram = event.getDeathMessage();
         telegram.sendMessage(telegramChatId, messageToTelegram);
 	}
 }
