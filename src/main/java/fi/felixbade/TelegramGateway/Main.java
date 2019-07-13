@@ -45,13 +45,18 @@ public class Main extends JavaPlugin implements Listener {
                 String msg = "§oTelegram message error";
                 if (message.text != null) {
                     msg = String.format("%s %s: %s",
-                    update.message.from.first_name,
-                    update.message.from.last_name,
-                    update.message.text);
+                    message.from.first_name,
+                    message.from.last_name,
+                    message.text);
+                } else if (message.caption != null) {
+                    msg = String.format("%s %s: §3[Photo]§r %s",
+                    message.from.first_name,
+                    message.from.last_name,
+                    message.caption);
                 } else {
                     msg = String.format("§o%s %s sent a non-text message",
-                    update.message.from.first_name,
-                    update.message.from.last_name);
+                    message.from.first_name,
+                    message.from.last_name);
                 }
                 Bukkit.broadcastMessage(msg);
             }
