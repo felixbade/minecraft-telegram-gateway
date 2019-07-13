@@ -1,4 +1,4 @@
-# bukkit-telegram-gateway
+# minecraft-telegram-gateway
 A Bukkit/Spigot plugin that links Minecraft chat to a Telegram group
 
 ## Building
