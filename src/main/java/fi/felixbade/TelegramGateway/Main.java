@@ -42,22 +42,23 @@ public class Main extends JavaPlugin implements Listener {
             TelegramUpdate[] updates = telegram.getNextUpdates();
             for (TelegramUpdate update : updates) {
                 TelegramMessage message = update.message;
+
                 String msg = "§oTelegram message error";
+                String name = message.from.getName().replace("§", "&");
+
                 if (message.text != null) {
-                    msg = String.format("%s %s: %s",
-                    message.from.first_name,
-                    message.from.last_name,
+                    msg = String.format("%s: %s",
+                    name,
                     message.text);
                 } else if (message.caption != null) {
-                    msg = String.format("%s %s: §3[Photo]§r %s",
-                    message.from.first_name,
-                    message.from.last_name,
+                    msg = String.format("%s: §3[Photo]§r %s",
+                    name,
                     message.caption);
                 } else {
-                    msg = String.format("§o%s %s sent a non-text message",
-                    message.from.first_name,
-                    message.from.last_name);
+                    msg = String.format("§o%s sent a non-text message",
+                    name);
                 }
+
                 Bukkit.broadcastMessage(msg);
             }
         }, 10, 10);
