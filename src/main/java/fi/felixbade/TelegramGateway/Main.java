@@ -67,6 +67,8 @@ public class Main extends JavaPlugin implements Listener {
     public String convertEmojisToMinecraft(String withEmojis) {
         return (withEmojis
                 .replace("😃", "§6=D§r ")
+                .replace("😄", "§6:D§r ")
+                .replace("😟", "§6D:§r ")
                 .replace("😂", "§3ξ§6D§r ")
                 .replace("😆", "§6XD§r ")
                 .replace("🤓", "§6:3§r ")
