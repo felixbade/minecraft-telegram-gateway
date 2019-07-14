@@ -4,6 +4,9 @@
     <artifactId>TelegramGateway</artifactId>
     <version>1.0</version>
     <name>TelegramGateway</name>
+    <properties>
+        <project.build.sourceEncoding>utf-8</project.build.sourceEncoding>
+    </properties>
     <repositories>
         <repository>
             <id>spigot-repo</id>
