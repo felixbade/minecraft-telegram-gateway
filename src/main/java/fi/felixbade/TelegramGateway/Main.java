@@ -62,6 +62,13 @@ public class Main extends JavaPlugin implements Listener {
                 Bukkit.broadcastMessage(msg);
             }
         }, 10, 10);
+
+        telegram.sendMessage(telegramChatId, "Minecraft gateway is up");
+    }
+
+    @Override
+    public void onDisable() {
+        telegram.sendMessage(telegramChatId, "Minecraft gateway is down");
     }
 
     public String convertEmojisToMinecraft(String withEmojis) {
