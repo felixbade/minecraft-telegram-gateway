@@ -22,6 +22,7 @@ A Bukkit/Spigot plugin that links Minecraft chat to a Telegram group.
 
 ## Configuring this plugin
 - Put your bot access token to `config.yml`.
+- Reload the Minecraft server.
 - If you have set up everything, the bot should shout the chat id to the Telegram group.
 - Put the chat id to `config.yml`.
 - Reload the Minecraft server.
