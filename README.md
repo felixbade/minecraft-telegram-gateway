@@ -1,5 +1,5 @@
 # minecraft-telegram-gateway
-A Bukkit/Spigot plugin that links Minecraft chat to a Telegram group
+A Bukkit/Spigot plugin that links Minecraft chat to a Telegram group.
 
 ## Building
 - Install Maven
