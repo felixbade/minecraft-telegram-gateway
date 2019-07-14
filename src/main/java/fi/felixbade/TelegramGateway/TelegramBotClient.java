@@ -37,13 +37,12 @@ public class TelegramBotClient {
     }
 
     public void blockingSendMessage(int telegramChatId, String messageToTelegram) {
-        System.out.println(messageToTelegram);
-
         String url = String.format("https://api.telegram.org/bot%s/sendMessage", this.token);
 
         JsonObject blob = new JsonObject();
         blob.addProperty("text", messageToTelegram);
         blob.addProperty("chat_id", telegramChatId);
+        blob.addProperty("parse_mode", "Markdown");
 
         try {
             httpPostJson(url, blob);

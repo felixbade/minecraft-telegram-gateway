@@ -43,25 +43,41 @@ public class Main extends JavaPlugin implements Listener {
             for (TelegramUpdate update : updates) {
                 TelegramMessage message = update.message;
 
-                String msg = "§oTelegram message error";
-                String name = message.from.getName().replace("§", "&");
-
-                if (message.text != null) {
-                    msg = String.format("%s: %s",
-                    name,
-                    convertEmojisToMinecraft(message.text));
-                } else if (message.caption != null) {
-                    msg = String.format("%s: §3[Photo]§r %s",
-                    name,
-                    convertEmojisToMinecraft(message.caption));
+                int chatId = message.chat.id;
+                if (chatId == this.telegramChatId) {
+                    handleTelegramMessage(message);
                 } else {
-                    msg = String.format("§o%s sent a non-text message",
-                    name);
-                }
+                    logger.warning(String.format("Message from an unknown chat: %d", chatId));
 
-                Bukkit.broadcastMessage(msg);
+                    // Avoid infinite loops
+                    if (message.from.is_bot) return;
+
+                    String info = String.format("Set `telegram-chat-id` to `%d` in `plugins/TelegramGateway/config.yml` " +
+                            "if you want to integrate this chat with the Minecraft chat", chatId);
+                    telegram.sendMessage(chatId, info);
+                }
             }
         }, 10, 10);
+    }
+
+    public void handleTelegramMessage(TelegramMessage message) {
+        String msg = "§oTelegram message error";
+        String name = message.from.getName().replace("§", "&");
+
+        if (message.text != null) {
+            msg = String.format("%s: %s",
+            name,
+            convertEmojisToMinecraft(message.text));
+        } else if (message.caption != null) {
+            msg = String.format("%s: §3[Photo]§r %s",
+            name,
+            convertEmojisToMinecraft(message.caption));
+        } else {
+            msg = String.format("§o%s sent a non-text message",
+            name);
+        }
+
+        Bukkit.broadcastMessage(msg);
     }
 
     public String convertEmojisToMinecraft(String withEmojis) {
