@@ -5,32 +5,35 @@ import fi.felixbade.TelegramBotClient.APIModel.*;
 public class Formatting {
 
     public static String formatTelegramToMinecraft(TelegramMessage message) {
-        String msg = "§oTelegram message error";
+        String msg = "";
         String name = message.from.getName().replace("§", "&");
 
+        if (message.forward_from != null) {
+            String fwd_name = message.forward_from.getName().replace("§", "&");
+            msg = String.format("§b[Fwd: %s]§r ", fwd_name);
+        }
+
         if (message.text != null) {
-            msg = String.format("%s: %s",
-                    name,
-                    convertEmojisToMinecraft(message.text));
+            msg += convertEmojisToMinecraft(message.text);
 
         } else if (message.caption != null) {
-            msg = String.format("%s: §3[Photo]§r %s",
-                    name,
-                    convertEmojisToMinecraft(message.caption));
+            msg += "§3[Photo]§r ";
+            msg += convertEmojisToMinecraft(message.caption);
 
         } else if (message.photo != null) {
-            msg = String.format("%s: §3[Photo]§r",
-                    name);
+            msg += "§3[Photo]§r ";
 
         } else if (message.sticker != null) {
-            msg = String.format("%s: §a[Sticker]§r %s from %s",
-                    name,
+            msg += String.format("§a[Sticker]§r %s from %s",
                     convertEmojisToMinecraft(message.sticker.emoji),
                     convertEmojisToMinecraft(message.sticker.set_name));
+        }
 
+
+        if (!msg.equals("")) {
+            msg = String.format("%s: %s", name, msg);
         } else {
-            msg = String.format("§o%s sent a non-text message",
-                    name);
+            msg = String.format("§o%s sent a non-text message", name);
         }
 
         return msg;
