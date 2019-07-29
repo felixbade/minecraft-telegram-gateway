@@ -4,7 +4,7 @@ import fi.felixbade.TelegramBotClient.APIModel.*;
 
 public class Formatting {
 
-    public static String formatTelegramToMinecraft(TelegramMessage message) {
+    public static String formatTelegramMessageToMinecraft(TelegramMessage message) {
         String msg = "";
         String name = message.from.getName().replace("§", "&");
 

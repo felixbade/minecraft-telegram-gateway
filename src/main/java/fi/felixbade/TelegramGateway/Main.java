@@ -33,7 +33,7 @@ public class Main extends JavaPlugin implements Listener {
             logger.warning("\033[31;1mWarning: Telegram access token has not been configured.\033[m");
         }
 
-        telegram = new TelegramBotClient(telegramToken);
+        this.telegram = new TelegramBotClient(this.telegramToken);
 
         Bukkit.getPluginManager().registerEvents(this, this);
 
@@ -44,7 +44,7 @@ public class Main extends JavaPlugin implements Listener {
 
                 int chatId = message.chat.id;
                 if (chatId == this.telegramChatId) {
-                    String formatted = Formatting.formatTelegramToMinecraft(message);
+                    String formatted = Formatting.formatTelegramMessageToMinecraft(message);
                     Bukkit.broadcastMessage(formatted);
 
                 } else {
