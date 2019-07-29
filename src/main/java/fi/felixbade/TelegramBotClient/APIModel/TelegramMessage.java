@@ -8,4 +8,5 @@ public class TelegramMessage {
     public String text;
     public String caption;
     public TelegramPhotoSize[] photo;
+    public TelegramSticker sticker;
 }

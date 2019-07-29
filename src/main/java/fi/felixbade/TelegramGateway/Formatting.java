@@ -10,18 +10,27 @@ public class Formatting {
 
         if (message.text != null) {
             msg = String.format("%s: %s",
-            name,
-            convertEmojisToMinecraft(message.text));
+                    name,
+                    convertEmojisToMinecraft(message.text));
+
         } else if (message.caption != null) {
             msg = String.format("%s: §3[Photo]§r %s",
-            name,
-            convertEmojisToMinecraft(message.caption));
+                    name,
+                    convertEmojisToMinecraft(message.caption));
+
         } else if (message.photo != null) {
             msg = String.format("%s: §3[Photo]§r",
-            name);
+                    name);
+
+        } else if (message.sticker != null) {
+            msg = String.format("%s: §a[Sticker]§r %s from %s",
+                    name,
+                    convertEmojisToMinecraft(message.sticker.emoji),
+                    convertEmojisToMinecraft(message.sticker.set_name));
+
         } else {
             msg = String.format("§o%s sent a non-text message",
-            name);
+                    name);
         }
 
         return msg;
