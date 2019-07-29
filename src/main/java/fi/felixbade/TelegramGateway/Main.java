@@ -33,10 +33,6 @@ public class Main extends JavaPlugin implements Listener {
             logger.warning("\033[31;1mWarning: Telegram access token has not been configured.\033[m");
         }
 
-        if (this.telegramChatId == -123456789) {
-            logger.warning("\033[31;1mWarning: Telegram chat ID has not been configured.\033[m");
-        }
-
         telegram = new TelegramBotClient(telegramToken);
 
         Bukkit.getPluginManager().registerEvents(this, this);
