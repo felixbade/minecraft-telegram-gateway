@@ -7,4 +7,5 @@ public class TelegramMessage {
     public TelegramChat chat;
     public String text;
     public String caption;
+    public TelegramPhotoSize[] photo;
 }

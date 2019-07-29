@@ -16,6 +16,9 @@ public class Formatting {
             msg = String.format("%s: §3[Photo]§r %s",
             name,
             convertEmojisToMinecraft(message.caption));
+        } else if (message.photo != null) {
+            msg = String.format("%s: §3[Photo]§r",
+            name);
         } else {
             msg = String.format("§o%s sent a non-text message",
             name);
