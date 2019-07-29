@@ -11,6 +11,9 @@ import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import fi.felixbade.TelegramBotClient.TelegramBotClient;
+import fi.felixbade.TelegramBotClient.APIModel.*;
+
 public class Main extends JavaPlugin implements Listener {
 
     private static int telegramChatId;

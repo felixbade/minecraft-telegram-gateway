@@ -1,4 +1,4 @@
-package fi.felixbade.TelegramGateway;
+package fi.felixbade.TelegramBotClient.APIModel;
 
 public class TelegramUpdate {
     public int update_id;

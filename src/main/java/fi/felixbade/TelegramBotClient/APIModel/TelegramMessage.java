@@ -1,4 +1,4 @@
-package fi.felixbade.TelegramGateway;
+package fi.felixbade.TelegramBotClient.APIModel;
 
 public class TelegramMessage {
     public int message_id;

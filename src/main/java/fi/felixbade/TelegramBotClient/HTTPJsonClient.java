@@ -1,4 +1,4 @@
-package fi.felixbade.TelegramGateway;
+package fi.felixbade.TelegramBotClient;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;

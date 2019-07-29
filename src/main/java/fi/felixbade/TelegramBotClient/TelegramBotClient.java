@@ -1,4 +1,4 @@
-package fi.felixbade.TelegramGateway;
+package fi.felixbade.TelegramBotClient;
 
 import java.io.IOException;
 
@@ -6,6 +6,8 @@ import com.google.gson.Gson;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonArray;
+
+import fi.felixbade.TelegramBotClient.APIModel.TelegramUpdate;
 
 public class TelegramBotClient {
 
