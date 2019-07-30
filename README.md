@@ -35,13 +35,13 @@ Most of my philosophy boils down to this: everything should be **transparent or 
 
 The idea started from the motivation to make playing Minecraft less lonely and not playing Minecraft less fear-of-missing-out-y. So, ...
 - **Maximum integration.** It’s not enough that the Minecraft and Telegram chats are linked, it should feel like *they are the same chat*. Of course, Minecraft and Telegram support a bit different message types, so the integration can’t be perfect. However, both ends should do their best to keep their people in the loop. Minecraft is just one client for Telegram and vice versa.
-- **Respect conventions.** The Telegram side should feel as ”telegrammy” as possible and Minecraft as ”minecrafty” as possible. Furthermore, the bridge should try to bring the ”telegramminess” to Minecraft and the ”minecraftiness” to Telegram as much as possible. That might sound like repetition but actually each combination brings it’s very own considerations.
-- **Ease of administration.** The gateway should utilise standard practises where applicable. The plugin should also be robust, even over cool features. This also means assisted setup.
+- **Respect conventions.** The Telegram side should feel as ”telegrammy” as possible and Minecraft as ”minecrafty” as possible. Furthermore, the bridge should try to bring the ”telegramminess” to Minecraft and the ”minecraftiness” to Telegram. That might sound like repetition but actually each combination brings it’s very own considerations.
+- **Ease of administration.** The gateway should utilize standard practises where applicable. The plugin should also be robust, even over cool features. This also means assisted setup.
 - **Zero configuration for participation.** You are just playing Minecraft, why would you care about Telegram? Never underestimate the power of laziness. Client-side mods are out of question.
 - **Simplicity is king.** Simplicity over flexibility.
 
 ### Things I would love to do if they were technically possible
-- Custom pixel graphics for all the emojis
-    - Bring Telegram to Minecraft in a Minecraft-y way
-- Possibility to send screenshots directly to Telegram with a press of a key (”Whoa, this Pillager came out of nowhere!”)
-    - Bring Minecraft to Telegram in a Telegram-y way
+- Custom pixel graphics for all the emojis.
+    - Bring Telegram to Minecraft in a Minecraft-y way.
+- Possibility to send screenshots directly to Telegram with a press of a key. (”Whoa, this Pillager came out of nowhere!”)
+    - Bring Minecraft to Telegram in a Telegram-y way.
