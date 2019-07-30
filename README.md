@@ -33,7 +33,7 @@ A Bukkit/Spigot plugin that integrates Minecraft chat with a Telegram group.
 
 Most of my philosophy boils down to this: everything should be **transparent or loveable**.
 
-The idea started from the motivation to make playing Minecraft less lonely and not playing Minecraft less fear-of-missing-out-y. So, ...
+The idea started from the motivation to make playing Minecraft less lonely and not playing Minecraft less fearing-of-missing-out. So, ...
 - **Maximum integration.** It’s not enough that the Minecraft and Telegram chats are linked, it should feel like *they are the same chat*. Of course, Minecraft and Telegram support a bit different message types, so the integration can’t be perfect. However, both ends should do their best to keep their people in the loop. Minecraft is just one client for Telegram and vice versa.
 - **Respect conventions.** The Telegram side should feel as ”telegrammy” as possible and Minecraft as ”minecrafty” as possible. Furthermore, the bridge should try to bring the ”telegramminess” to Minecraft and the ”minecraftiness” to Telegram. That might sound like repetition but actually each combination brings it’s own challenges.
 - **Ease of administration.** The gateway should use standard practises where applicable. The plugin should also be robust, even over cool features. This also means assisted setup.
