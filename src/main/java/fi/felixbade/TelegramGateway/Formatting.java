@@ -22,7 +22,11 @@ public class Formatting {
 
         } else if (message.caption != null) {
             msg += "§3[Photo]§r ";
-            msg += convertEmojisToMinecraft(message.caption);
+            String text = message.caption;
+            if (message.caption_entities != null) {
+                text = addBoldAndItalicFormatting(text, message.caption_entities);
+            }
+            msg += convertEmojisToMinecraft(text);
 
         } else if (message.photo != null) {
             msg += "§3[Photo]§r ";
