@@ -14,7 +14,11 @@ public class Formatting {
         }
 
         if (message.text != null) {
-            msg += convertEmojisToMinecraft(message.text);
+            String text = message.text;
+            if (message.entities != null) {
+                text = addBoldAndItalicFormatting(text, message.entities);
+            }
+            msg += convertEmojisToMinecraft(text);
 
         } else if (message.caption != null) {
             msg += "§3[Photo]§r ";
@@ -37,6 +41,60 @@ public class Formatting {
         }
 
         return msg;
+    }
+
+    public static String addBoldAndItalicFormatting(String text, TelegramMessageEntity[] entities) {
+        boolean[] boldCharacters = new boolean[text.length()];
+        boolean[] italicCharacters = new boolean[text.length()];
+
+        for (int i = 0; i < text.length(); i++) {
+            boldCharacters[i] = false;
+            italicCharacters[i] = false;
+        }
+
+        for (TelegramMessageEntity entity : entities) {
+            if (entity.type.equals("bold")) {
+                for (int i = 0; i < entity.length; i++) {
+                    boldCharacters[entity.offset + i] = true;
+                }
+            }
+            if (entity.type.equals("italic")) {
+                for (int i = 0; i < entity.length; i++) {
+                    italicCharacters[entity.offset + i] = true;
+                }
+            }
+        }
+
+        String newText = "";
+        boolean prevBold = false;
+        boolean prevItalic = false;
+        for (int i = 0; i < text.length(); i++) {
+            boolean bold = boldCharacters[i];
+            boolean italic = italicCharacters[i];
+
+            if ((prevBold && !bold) || (prevItalic && !italic)) {
+                newText += "§r";
+                if (bold) {
+                    newText += "§l";
+                }
+                if (italic) {
+                    newText += "§o";
+                }
+            }
+            if (bold && !prevBold) {
+                newText += "§l";
+            }
+            if (italic && !prevItalic) {
+                newText += "§o";
+            }
+
+            newText += text.substring(i, i+1);
+
+            prevBold = bold;
+            prevItalic = italic;
+        }
+
+        return newText;
     }
 
     public static String convertEmojisToMinecraft(String withEmojis) {

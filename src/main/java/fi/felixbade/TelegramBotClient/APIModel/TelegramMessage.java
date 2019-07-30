@@ -7,6 +7,8 @@ public class TelegramMessage {
     public TelegramChat chat;
     public TelegramUser forward_from;
     public String text;
+    public TelegramMessageEntity[] entities;
+    public TelegramMessageEntity[] caption_entities;
     public TelegramPhotoSize[] photo;
     public TelegramSticker sticker;
     public String caption;
