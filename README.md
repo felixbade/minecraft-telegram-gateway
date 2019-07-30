@@ -11,7 +11,7 @@ A Bukkit/Spigot plugin that integrates Minecraft chat with a Telegram group.
 
 ### Initial plugin setup
 - Copy `TelegramGateway.jar` to the `plugins` folder in your Bukkit/Spigot server
-- Run the server (or reload the plugins) and it will add `plugins/TelegramGateway/config.yml`.
+- Run the server (or reload the plugins) and it will create `plugins/TelegramGateway/config.yml`.
 - You will see a warning in the console that Telegram chat id and access token are not configured.
 
 ### Configuring Telegram
