@@ -6,10 +6,10 @@ public class Formatting {
 
     public static String formatTelegramMessageToMinecraft(TelegramMessage message) {
         String msg = "";
-        String name = message.from.getName().replace("§", "&");
+        String name = message.from.getName().replace("§", "⅋");
 
         if (message.forward_from != null) {
-            String fwd_name = message.forward_from.getName().replace("§", "&");
+            String fwd_name = message.forward_from.getName().replace("§", "⅋");
             msg = String.format("§b[Fwd: %s]§r ", fwd_name);
         }
 
