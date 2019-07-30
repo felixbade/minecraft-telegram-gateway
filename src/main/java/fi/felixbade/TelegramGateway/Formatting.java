@@ -35,14 +35,12 @@ public class Formatting {
             msg += String.format("§a[Sticker]§r %s from %s",
                     convertEmojisToMinecraft(message.sticker.emoji),
                     convertEmojisToMinecraft(message.sticker.set_name));
-        }
 
-
-        if (!msg.equals("")) {
-            msg = String.format("%s: %s", name, msg);
         } else {
-            msg = String.format("§o%s sent a non-text message", name);
+            msg += "§7[An unrecognized message type]";
         }
+
+        msg = String.format("%s: %s", name, msg);
 
         return msg;
     }
