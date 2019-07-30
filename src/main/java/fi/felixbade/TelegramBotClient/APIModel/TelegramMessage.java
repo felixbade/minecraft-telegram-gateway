@@ -3,11 +3,11 @@ package fi.felixbade.TelegramBotClient.APIModel;
 public class TelegramMessage {
     public int message_id;
     public TelegramUser from;
-    public TelegramUser forward_from;
     public int date;
     public TelegramChat chat;
+    public TelegramUser forward_from;
     public String text;
-    public String caption;
     public TelegramPhotoSize[] photo;
     public TelegramSticker sticker;
+    public String caption;
 }

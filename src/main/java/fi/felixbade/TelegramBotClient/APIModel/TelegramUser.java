@@ -7,16 +7,9 @@ public class TelegramUser {
     public String last_name;
 
     public String getName() {
-        if (first_name != null) {
-            if (last_name != null) {
-                return first_name + " " + last_name;
-            }
-            return first_name;
-        } else {
-            if (last_name != null) {
-                return last_name;
-            }
-            return "";
+        if (last_name != null) {
+            return first_name + " " + last_name;
         }
+        return first_name;
     }
 }
