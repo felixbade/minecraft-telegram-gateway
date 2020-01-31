@@ -36,6 +36,11 @@ public class Formatting {
                     convertEmojisToMinecraft(message.sticker.emoji),
                     convertEmojisToMinecraft(message.sticker.set_name));
 
+        } else if (message.location != null) {
+        	msg += String.format("§3[Location: lat: %s, long: %s]§r",
+        			message.location.latitude,
+        			message.location.longitude);
+            
         } else {
             msg += "§7[An unrecognized message type]";
         }
