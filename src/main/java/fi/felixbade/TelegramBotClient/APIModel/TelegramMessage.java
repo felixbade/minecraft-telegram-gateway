@@ -11,5 +11,6 @@ public class TelegramMessage {
     public TelegramMessageEntity[] caption_entities;
     public TelegramPhotoSize[] photo;
     public TelegramSticker sticker;
+    public TelegramLocation location;
     public String caption;
 }
