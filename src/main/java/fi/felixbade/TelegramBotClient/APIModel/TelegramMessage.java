@@ -13,4 +13,6 @@ public class TelegramMessage {
     public TelegramSticker sticker;
     public TelegramLocation location;
     public String caption;
+    public TelegramUser[] new_chat_members;
+    public TelegramUser left_chat_member;
 }

@@ -6,10 +6,11 @@ public class Formatting {
 
     public static String formatTelegramMessageToMinecraft(TelegramMessage message) {
         String msg = "";
-        String name = message.from.getName().replace("§", "⅋");
+        String action = "";
+        String name = tgUserToString(message.from);
 
         if (message.forward_from != null) {
-            String fwd_name = message.forward_from.getName().replace("§", "⅋");
+            String fwd_name = tgUserToString(message.forward_from);
             msg = String.format("§b[Fwd: %s]§r ", fwd_name);
         }
 
@@ -40,14 +41,30 @@ public class Formatting {
         	msg += String.format("§3[Location: lat: %s, long: %s]§r",
         			message.location.latitude,
         			message.location.longitude);
-            
+
+        } else if (message.new_chat_members != null) {
+            String[] name_list = new String[message.new_chat_members.length];
+            for (int i = 0; i < message.new_chat_members.length; i++) {
+                name_list[i] = tgUserToString(message.new_chat_members[i]);
+            }
+            action = String.format("added %s", String.join(", ", name_list));
+
+        } else if (message.left_chat_member != null) {
+            action = String.format("removed %s", tgUserToString(message.left_chat_member));
+
         } else {
             msg += "§7[An unrecognized message type]";
         }
 
-        msg = String.format("%s: %s", name, msg);
+        if (!action.equals("")) {
+            return String.format("§e%s %s", name, action);
+        } else {
+            return String.format("%s: %s", name, msg);
+        }
+    }
 
-        return msg;
+    public static String tgUserToString(TelegramUser user) {
+        return user.getName().replace("§", "⅋");
     }
 
     public static String addBoldAndItalicFormatting(String text, TelegramMessageEntity[] entities) {
