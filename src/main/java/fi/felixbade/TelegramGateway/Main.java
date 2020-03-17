@@ -40,22 +40,24 @@ public class Main extends JavaPlugin implements Listener {
         Bukkit.getScheduler().runTaskTimerAsynchronously(this, () -> {
             TelegramUpdate[] updates = telegram.getNextUpdates();
             for (TelegramUpdate update : updates) {
-                TelegramMessage message = update.message;
+                if (update.message != null) {                    
+                    TelegramMessage message = update.message;
 
-                int chatId = message.chat.id;
-                if (chatId == this.telegramChatId) {
-                    String formatted = Formatting.formatTelegramMessageToMinecraft(message);
-                    Bukkit.broadcastMessage(formatted);
+                    int chatId = message.chat.id;
+                    if (chatId == this.telegramChatId) {
+                        String formatted = Formatting.formatTelegramMessageToMinecraft(message);
+                        Bukkit.broadcastMessage(formatted);
 
-                } else {
-                    logger.warning(String.format("Message from an unknown chat: %d", chatId));
+                    } else {
+                        logger.warning(String.format("Message from an unknown chat: %d", chatId));
 
-                    // Avoid infinite loops
-                    if (message.from.is_bot) return;
+                        // Avoid infinite loops
+                        if (message.from.is_bot) return;
 
-                    String info = String.format("Set `telegram-chat-id` to `%d` in `plugins/TelegramGateway/config.yml` " +
-                            "if you want to integrate this chat with the Minecraft chat", chatId);
-                    telegram.sendMessage(chatId, info);
+                        String info = String.format("Set `telegram-chat-id` to `%d` in `plugins/TelegramGateway/config.yml` " +
+                                "if you want to integrate this chat with the Minecraft chat", chatId);
+                        telegram.sendMessage(chatId, info);
+                    }
                 }
             }
         }, 10, 10);

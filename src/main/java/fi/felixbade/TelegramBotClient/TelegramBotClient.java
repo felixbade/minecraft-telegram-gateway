@@ -2,6 +2,9 @@ package fi.felixbade.TelegramBotClient;
 
 import java.io.IOException;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import com.google.gson.Gson;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
@@ -60,9 +63,8 @@ public class TelegramBotClient {
         if (updates.has("result")) {
             JsonArray updatesBlob = updates.getAsJsonArray("result");
             int updateCount = updatesBlob.size();
-            TelegramUpdate[] parsedUpdates = new TelegramUpdate[updateCount];
+            List<TelegramUpdate> parsedUpdates = new ArrayList<TelegramUpdate>();
 
-            int i = 0;
             for (JsonElement blob : updatesBlob) {
                 TelegramUpdate update = gson.fromJson(blob, TelegramUpdate.class);
                 int updateId = update.update_id;
@@ -70,11 +72,10 @@ public class TelegramBotClient {
                     continue;
                 }
                 this.lastUpdateId = updateId;
-                parsedUpdates[i] = update;
-                i++;
+                parsedUpdates.add(update);
             }
 
-            return parsedUpdates;
+            return parsedUpdates.toArray(new TelegramUpdate[parsedUpdates.size()]);
         }
 
         return new TelegramUpdate[0];
