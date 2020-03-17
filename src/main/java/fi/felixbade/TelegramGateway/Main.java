@@ -40,7 +40,7 @@ public class Main extends JavaPlugin implements Listener {
         Bukkit.getScheduler().runTaskTimerAsynchronously(this, () -> {
             TelegramUpdate[] updates = telegram.getNextUpdates();
             for (TelegramUpdate update : updates) {
-                if (update.message != null) {                    
+                if (update.message != null) {
                     TelegramMessage message = update.message;
 
                     int chatId = message.chat.id;
@@ -56,7 +56,7 @@ public class Main extends JavaPlugin implements Listener {
 
                         String info = String.format("Set `telegram-chat-id` to `%d` in `plugins/TelegramGateway/config.yml` " +
                                 "if you want to integrate this chat with the Minecraft chat", chatId);
-                        telegram.sendMessage(chatId, info);
+                        telegram.sendMarkdownMessage(chatId, info);
                     }
                 }
             }

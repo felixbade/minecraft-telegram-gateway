@@ -22,21 +22,31 @@ public class TelegramBotClient {
         this.token = token;
     }
 
+    public void sendMarkdownMessage(int telegramChatId, String messageToTelegram) {
+        sendMessageWithParseMode(telegramChatId, messageToTelegram, "Markdown");
+    }
+
     public void sendMessage(int telegramChatId, String messageToTelegram) {
+        sendMessageWithParseMode(telegramChatId, messageToTelegram, "");
+    }
+
+    public void sendMessageWithParseMode(int telegramChatId, String messageToTelegram, String parseMode) {
         new Thread(new Runnable() {
             public void run() {
-                blockingSendMessage(telegramChatId, messageToTelegram);
+                blockingSendMessage(telegramChatId, messageToTelegram, parseMode);
             }
         }).start();
     }
 
-    public void blockingSendMessage(int telegramChatId, String messageToTelegram) {
+    public void blockingSendMessage(int telegramChatId, String messageToTelegram, String parseMode) {
         String url = String.format("https://api.telegram.org/bot%s/sendMessage", this.token);
 
         JsonObject blob = new JsonObject();
         blob.addProperty("text", messageToTelegram);
         blob.addProperty("chat_id", telegramChatId);
-        blob.addProperty("parse_mode", "Markdown");
+        if (!parseMode.equals("")) {
+            blob.addProperty("parse_mode", parseMode);
+        }
 
         try {
             HTTPJsonClient.post(url, blob);
@@ -79,5 +89,18 @@ public class TelegramBotClient {
         }
 
         return new TelegramUpdate[0];
+    }
+
+    public static String escapeMarkdown(String text) {
+        // https://core.telegram.org/bots/api#markdown-style
+        String escapedCharacters = "_*`[";
+        //String escapedCharacters = `"//"_*[]()~`>#+-=|{}.!"; // MDv2
+
+        text = text.replace("\\", "\\\\");
+        for (char c : escapedCharacters.toCharArray()) {
+            String s = Character.toString(c);
+            text = text.replace(s, "\\" + s);
+        }
+        return text;
     }
 }
