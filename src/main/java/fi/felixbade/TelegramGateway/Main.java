@@ -10,6 +10,7 @@ import org.bukkit.event.player.AsyncPlayerChatEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.plugin.java.JavaPlugin;
+import net.md_5.bungee.api.chat.TextComponent;
 
 import fi.felixbade.TelegramBotClient.TelegramBotClient;
 import fi.felixbade.TelegramBotClient.APIModel.*;
@@ -45,8 +46,8 @@ public class Main extends JavaPlugin implements Listener {
 
                     int chatId = message.chat.id;
                     if (chatId == this.telegramChatId) {
-                        String formatted = Formatting.formatTelegramMessageToMinecraft(message);
-                        Bukkit.broadcastMessage(formatted);
+                        TextComponent formatted = Formatting.formatTelegramMessageToMinecraft(message);
+                        Bukkit.getServer().spigot().broadcast(formatted);
 
                     } else {
                         logger.warning(String.format("Message from an unknown chat: %d", chatId));
