@@ -1,10 +1,12 @@
 package fi.felixbade.TelegramGateway;
 
+import net.md_5.bungee.api.chat.TextComponent;
+
 import fi.felixbade.TelegramBotClient.APIModel.*;
 
 public class Formatting {
 
-    public static String formatTelegramMessageToMinecraft(TelegramMessage message) {
+    public static TextComponent formatTelegramMessageToMinecraft(TelegramMessage message) {
         String msg = "";
         String action = "";
         String name = tgUserToString(message.from);
@@ -57,9 +59,10 @@ public class Formatting {
         }
 
         if (!action.equals("")) {
-            return String.format("§e%s %s", name, action);
+            return new TextComponent(String.format("§e%s %s", name, action));
+
         } else {
-            return String.format("%s: %s", name, msg);
+            return new TextComponent(String.format("%s: %s", name, msg));
         }
     }
 
