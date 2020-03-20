@@ -1,73 +1,110 @@
 package fi.felixbade.TelegramGateway;
 
+import net.md_5.bungee.api.ChatColor;
+import net.md_5.bungee.api.chat.HoverEvent;
 import net.md_5.bungee.api.chat.TextComponent;
+import net.md_5.bungee.api.chat.BaseComponent;
+import net.md_5.bungee.api.chat.ComponentBuilder;
+
 
 import fi.felixbade.TelegramBotClient.APIModel.*;
 
 public class Formatting {
 
     public static TextComponent formatTelegramMessageToMinecraft(TelegramMessage message) {
-        String msg = "";
-        String action = "";
-        String name = tgUserToString(message.from);
+        TextComponent msg = new TextComponent();
+        boolean action = false;
+        TextComponent name = tgUserToTextComponent(message.from);
 
         if (message.forward_from != null) {
-            String fwd_name = tgUserToString(message.forward_from);
-            msg = String.format("§b[Fwd: %s]§r ", fwd_name);
+            TextComponent fwd_name = tgUserToTextComponent(message.forward_from);
+            TextComponent fwdComponent = new TextComponent("[Fwd: ");
+            fwdComponent.setColor(ChatColor.AQUA);
+            fwdComponent.addExtra(fwd_name);
+            fwdComponent.addExtra(new TextComponent("] "));
+            msg.addExtra(fwdComponent);
         }
 
         if (message.text != null) {
+            // TODO fix formatting
             String text = message.text;
             if (message.entities != null) {
                 text = addBoldAndItalicFormatting(text, message.entities);
             }
-            msg += convertEmojisToMinecraft(text);
+            msg.addExtra(new TextComponent(convertEmojisToMinecraft(text)));
 
         } else if (message.caption != null) {
-            msg += "§3[Photo]§r ";
+            // TODO fix formatting
+            msg.addExtra(new TextComponent("§3[Photo]§r "));
             String text = message.caption;
             if (message.caption_entities != null) {
                 text = addBoldAndItalicFormatting(text, message.caption_entities);
             }
-            msg += convertEmojisToMinecraft(text);
+            msg.addExtra(new TextComponent(convertEmojisToMinecraft(text)));
 
         } else if (message.photo != null) {
-            msg += "§3[Photo]§r ";
+            // TODO fix formatting
+            msg.addExtra(new TextComponent("§3[Photo]§r "));
 
         } else if (message.sticker != null) {
-            msg += String.format("§a[Sticker]§r %s from %s",
+            // TODO fix formatting
+            msg.addExtra(new TextComponent(String.format("§a[Sticker]§r %s from %s",
                     convertEmojisToMinecraft(message.sticker.emoji),
-                    convertEmojisToMinecraft(message.sticker.set_name));
+                    convertEmojisToMinecraft(message.sticker.set_name))));
 
         } else if (message.location != null) {
-        	msg += String.format("§3[Location: lat: %s, long: %s]§r",
+            // TODO fix formatting
+        	msg.addExtra(new TextComponent(String.format("§3[Location: lat: %s, long: %s]§r",
         			message.location.latitude,
-        			message.location.longitude);
+        			message.location.longitude)));
 
         } else if (message.new_chat_members != null) {
-            String[] name_list = new String[message.new_chat_members.length];
+            msg.addExtra(new TextComponent("added "));
+
             for (int i = 0; i < message.new_chat_members.length; i++) {
-                name_list[i] = tgUserToString(message.new_chat_members[i]);
+                if (i > 0) {
+                    msg.addExtra(new TextComponent(", "));
+                }
+                msg.addExtra(tgUserToTextComponent(message.new_chat_members[i]));
             }
-            action = String.format("added %s", String.join(", ", name_list));
+            action = true;
 
         } else if (message.left_chat_member != null) {
-            action = String.format("removed %s", tgUserToString(message.left_chat_member));
+            action = true;
+            msg.addExtra(new TextComponent("removed "));
+            msg.addExtra(tgUserToTextComponent(message.left_chat_member));
 
         } else {
-            msg += "§7[An unrecognized message type]";
+            // TODO fix formatting
+            msg.addExtra(new TextComponent("§7[An unrecognized message type]"));
         }
 
-        if (!action.equals("")) {
-            return new TextComponent(String.format("§e%s %s", name, action));
+        TextComponent formatted = new TextComponent();
+        if (action) {
+            formatted.setColor(ChatColor.YELLOW);
+            formatted.addExtra(name);
+            formatted.addExtra(new TextComponent(" "));
+            formatted.addExtra(msg);
 
         } else {
-            return new TextComponent(String.format("%s: %s", name, msg));
+            formatted.addExtra(name);
+            formatted.addExtra(new TextComponent(": "));
+            formatted.addExtra(msg);
         }
+
+        return formatted;
     }
 
-    public static String tgUserToString(TelegramUser user) {
-        return user.getName().replace("§", "⅋");
+    public static TextComponent tgUserToTextComponent(TelegramUser user) {
+        TextComponent userComponent = new TextComponent(user.getName().replace("§", "⅋"));
+        BaseComponent[] usernameComponent;
+        if (user.username != null) {
+            usernameComponent = new ComponentBuilder("@" + user.username).create();
+        } else {
+            usernameComponent = new ComponentBuilder("No username").create();
+        }
+        userComponent.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, usernameComponent));
+        return userComponent;
     }
 
     public static String addBoldAndItalicFormatting(String text, TelegramMessageEntity[] entities) {
