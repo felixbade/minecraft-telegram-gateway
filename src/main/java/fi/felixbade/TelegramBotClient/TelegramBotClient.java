@@ -103,4 +103,25 @@ public class TelegramBotClient {
         }
         return text;
     }
+
+    public void setChatDescription(long telegramChatId, String description) {
+        new Thread(new Runnable() {
+            public void run() {
+                blockingSetChatDescription(telegramChatId, description);
+            }
+        }).start();
+    }
+
+    public void blockingSetChatDescription(long telegramChatId, String description) {
+        String url = String.format("https://api.telegram.org/bot%s/setChatDescription", this.token);
+
+        JsonObject blob = new JsonObject();
+        blob.addProperty("chat_id", telegramChatId);
+        blob.addProperty("description", description);
+
+        try {
+            HTTPJsonClient.post(url, blob);
+        } catch (java.io.IOException e) {
+        }
+    }
 }

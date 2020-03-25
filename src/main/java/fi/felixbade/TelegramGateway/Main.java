@@ -2,7 +2,11 @@ package fi.felixbade.TelegramGateway;
 
 import java.util.logging.Logger;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.bukkit.Bukkit;
+import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.PlayerDeathEvent;
@@ -78,6 +82,12 @@ public class Main extends JavaPlugin implements Listener {
 
     @EventHandler
     public void onJoin(PlayerJoinEvent event) {
+        List<String> onlinePlayers = new ArrayList<String>();
+        for(Player player : Bukkit.getServer().getOnlinePlayers()) {
+            onlinePlayers.add(player.getName());
+        }
+        updatePlayersOnlineInTelegram(onlinePlayers.toArray(new String[onlinePlayers.size()]));
+
         String name = event.getPlayer().getName();
         String messageToTelegram = String.format("%s joined the game", name);
         telegram.sendMessage(telegramChatId, messageToTelegram);
@@ -85,6 +95,14 @@ public class Main extends JavaPlugin implements Listener {
 
     @EventHandler
     public void onQuit(PlayerQuitEvent event) {
+        List<String> onlinePlayers = new ArrayList<String>();
+        for(Player player : Bukkit.getServer().getOnlinePlayers()) {
+            if (!player.equals(event.getPlayer())) {
+                onlinePlayers.add(player.getName());
+            }
+        }
+        updatePlayersOnlineInTelegram(onlinePlayers.toArray(new String[onlinePlayers.size()]));
+
         String name = event.getPlayer().getName();
         String messageToTelegram = String.format("%s left the game", name);
         telegram.sendMessage(telegramChatId, messageToTelegram);
@@ -94,5 +112,15 @@ public class Main extends JavaPlugin implements Listener {
     public void onDeath(PlayerDeathEvent event) {
         String messageToTelegram = event.getDeathMessage();
         telegram.sendMessage(telegramChatId, messageToTelegram);
+    }
+
+    public void updatePlayersOnlineInTelegram(String[] players) {
+        String message = "";
+        if (players.length == 0) {
+            message = "Nobody online in Minecraft";
+        } else {
+            message = "Online in Minecraft: " + String.join(", ", players);
+        }
+        telegram.setChatDescription(telegramChatId, message);
     }
 }
