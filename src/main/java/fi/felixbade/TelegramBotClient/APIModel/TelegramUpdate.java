@@ -1,7 +1,7 @@
 package fi.felixbade.TelegramBotClient.APIModel;
 
 public class TelegramUpdate {
-    public int update_id;
+    public long update_id;
     public TelegramMessage message;
     public TelegramMessage edited_message;
     public TelegramMessage channel_post;

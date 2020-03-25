@@ -1,6 +1,6 @@
 package fi.felixbade.TelegramBotClient.APIModel;
 
 public class TelegramChat {
-    public int id;
+    public long id;
     public String type;
 }

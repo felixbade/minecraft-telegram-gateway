@@ -17,7 +17,7 @@ import fi.felixbade.TelegramBotClient.APIModel.*;
 
 public class Main extends JavaPlugin implements Listener {
 
-    private static int telegramChatId;
+    private static long telegramChatId;
     private static String telegramToken;
 
     public static TelegramBotClient telegram;
@@ -25,7 +25,7 @@ public class Main extends JavaPlugin implements Listener {
     @Override
     public void onEnable() {
         this.saveDefaultConfig();
-        this.telegramChatId = this.getConfig().getInt("telegram-chat-id");
+        this.telegramChatId = this.getConfig().getLong("telegram-chat-id");
         this.telegramToken = this.getConfig().getString("telegram-token");
 
         Logger logger = Bukkit.getLogger();
@@ -44,7 +44,7 @@ public class Main extends JavaPlugin implements Listener {
                 if (update.message != null) {
                     TelegramMessage message = update.message;
 
-                    int chatId = message.chat.id;
+                    long chatId = message.chat.id;
                     if (chatId == this.telegramChatId) {
                         TextComponent formatted = Formatting.formatTelegramMessageToMinecraft(message);
                         Bukkit.getServer().spigot().broadcast(formatted);
