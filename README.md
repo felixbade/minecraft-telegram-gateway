@@ -19,12 +19,12 @@ A Bukkit/Spigot plugin that integrates Minecraft chat with a Telegram group.
 - Create a Telegram bot for this plugin with [BotFather](https://t.me/botfather). If you have multiple Minecraft severs that use this plugin, each one will need it's own bot.
     - Suggested name for the bot: the hostname/ip of your Minecraft server
 - Add the bot to your group chat.
-- Set the privacy mode of your new bot to Disabled. Otherwise the bot will not be able to see messages in the group chat.
+- **Set the privacy mode of your new bot to Disabled.** Otherwise the bot will not be able to see messages in the group chat. Say `/setprivacy` to [BotFather](https://t.me/botfather).
 
 ### Configuring this plugin
 - Copy–paste the HTTP API access token from BotFather to `config.yml`.
 - Reload the Minecraft server.
-- If you have set up everything, the bot should shout the chat id to the Telegram group.
+- If you have set up everything else, **the bot should shout the chat id to the Telegram group.**
 - Put the chat id to `config.yml`.
 - Reload the Minecraft server.
 - It should be good to go now. If you have any trouble, just create a new issue to [the issue tracker](https://github.com/felixbade/minecraft-telegram-gateway/issues).
